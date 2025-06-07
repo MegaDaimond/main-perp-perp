@@ -7,12 +7,10 @@
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
-  # LOP edit start
   - LOPunderwearloadout
   - LOPsocksloadout
   - LOPbraloadout
   - SponsorsClothing
-  # LOP edit end
 
 - type: roleLoadout
   id: JobLPPАdjutant
@@ -23,12 +21,10 @@
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
-  # LOP edit start
   - LOPunderwearloadout
   - LOPsocksloadout
   - LOPbraloadout
   - SponsorsClothing
-  # LOP edit end
 
 # Sec
 - type: roleLoadout
@@ -39,9 +35,7 @@
   - Survival
   - Trinkets
   - GroupSpeciesBreathTool
-  # LOP edit start
   - LOPunderwearloadout
   - LOPsocksloadout
   - LOPbraloadout
   - SponsorsClothing
-  # LOP edit end
