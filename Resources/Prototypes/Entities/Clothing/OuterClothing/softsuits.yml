@@ -12,7 +12,6 @@
   - type: Tag
     tags:
     - SuitEVA
-    - MonkeyWearable
     - WhitelistChameleon
     - HidesTail # LOP edit
 
@@ -30,7 +29,6 @@
   - type: Tag
     tags:
     - SuitEVA
-    - MonkeyWearable
     - WhitelistChameleon
     - HidesTail # LOP edit
 
@@ -73,7 +71,6 @@
   - type: Tag
     tags:
     - SuitEVA
-    - MonkeyWearable
     - WhitelistChameleon
     - HidesTail # LOP edit
 

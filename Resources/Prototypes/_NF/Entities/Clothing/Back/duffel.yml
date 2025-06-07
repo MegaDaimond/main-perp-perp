@@ -1,0 +1,23 @@
+- type: entity
+  id: ClothingBackpackDuffelArcadia
+  name: arcadia duffel
+  parent: NFClothingDuffel
+  description: A duffelbag produced by Arcadia Industries
+  components:
+  - type: Sprite
+    sprite: _NF/Clothing/Back/Duffels/arcadia.rsi
+
+- type: entity
+  parent: ClothingBackpackDuffelSecurity
+  id: ClothingBackpackDuffelNfsdBrown
+  name: NFSD duffel
+  components:
+  - type: Sprite
+    sprite: _NF/Clothing/Back/Duffels/nfsd_brown.rsi
+
+- type: entity
+  parent: ClothingBackpackDuffelNfsdBrown
+  id: ClothingBackpackDuffelNfsdCream
+  components:
+  - type: Sprite
+    sprite: _NF/Clothing/Back/Duffels/nfsd_cream.rsi
