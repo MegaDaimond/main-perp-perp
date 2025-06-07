@@ -1,0 +1,47 @@
+# Command
+- type: roleLoadout
+  id: JobLPPBlueShieldOfficer
+  groups:
+  - LPPBlueshieldJumpsuit
+  - LPPBlueshieldBack
+  - Survival
+  - Trinkets
+  - GroupSpeciesBreathTool
+  # LOP edit start
+  - LOPunderwearloadout
+  - LOPsocksloadout
+  - LOPbraloadout
+  - SponsorsClothing
+  # LOP edit end
+
+- type: roleLoadout
+  id: JobLPPАdjutant
+  groups:
+  - LPPAdjutantJumpsuit
+  - LPPAdjutantCloak
+  - LPPAdjutantHead
+  - Survival
+  - Trinkets
+  - GroupSpeciesBreathTool
+  # LOP edit start
+  - LOPunderwearloadout
+  - LOPsocksloadout
+  - LOPbraloadout
+  - SponsorsClothing
+  # LOP edit end
+
+# Sec
+- type: roleLoadout
+  id: LPPJobSecurityEnginer
+  groups:
+  - LPPBrigtechBack
+  - LPPBrigtechJumpsuit
+  - Survival
+  - Trinkets
+  - GroupSpeciesBreathTool
+  # LOP edit start
+  - LOPunderwearloadout
+  - LOPsocksloadout
+  - LOPbraloadout
+  - SponsorsClothing
+  # LOP edit end

@@ -38,6 +38,7 @@
      pocket1: LPPBlueshieldlaser
      pocket2: HandheldCrewMonitor
      belt: ClothingBeltSecurityFilled
+     back: LPPClothingBackpackBlueshield
    storage:
      back:
      - Flash
