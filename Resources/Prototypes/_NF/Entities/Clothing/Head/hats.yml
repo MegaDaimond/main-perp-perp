@@ -254,7 +254,7 @@
     sprite: _NF/Clothing/Head/Hats/stc_cap.rsi
   - type: Clothing
     sprite: _NF/Clothing/Head/Hats/stc_cap.rsi
-    
+
 - type: entity
   parent: ClothingHeadHatBeretHoS
   id: ClothingHeadHatBeretCommander
