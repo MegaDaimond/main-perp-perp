@@ -795,6 +795,11 @@ namespace Content.Server.Database.Migrations.Postgres
                         .HasColumnType("text")
                         .HasColumnName("admin_ooc_color");
 
+                    b.PrimitiveCollection<string[]>("ConstructionFavorites")
+                        .IsRequired()
+                        .HasColumnType("text[]")
+                        .HasColumnName("construction_favorites");
+
                     b.Property<int>("SelectedCharacterSlot")
                         .HasColumnType("integer")
                         .HasColumnName("selected_character_slot");
@@ -829,6 +834,13 @@ namespace Content.Server.Database.Migrations.Postgres
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("char_name");
+
+#if LOP
+                    b.Property<string>("ErpStatus")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("erp_status");
+#endif
 
                     b.Property<string>("EyeColor")
                         .IsRequired()

@@ -35,12 +35,14 @@ using Robust.Shared.Enums;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
 using Direction = Robust.Shared.Maths.Direction;
-//LOP edit start
+// LOP edit start
 using Content.Shared._NewParadise.TTS;
 #if LOP
 using Content.Client._NewParadise.Sponsors;
 #endif
-//LOP edit end
+#if LOP
+using Content.Shared._ERPModule.Data;
+#endif
 
 namespace Content.Client.Lobby.UI
 {
@@ -59,6 +61,10 @@ namespace Content.Client.Lobby.UI
         private readonly LobbyUIController _controller;
 
         private readonly SpriteSystem _sprite;
+
+        // CCvar.
+        private int _maxNameLength;
+        private bool _allowFlavorText;
 
         private FlavorText.FlavorText? _flavorText;
         private TextEdit? _flavorTextEdit;
@@ -138,6 +144,10 @@ namespace Content.Client.Lobby.UI
             _requirements = requirements;
             _controller = UserInterfaceManager.GetUIController<LobbyUIController>();
             _sprite = _entManager.System<SpriteSystem>();
+
+            _maxNameLength = _cfgManager.GetCVar(CCVars.MaxNameLength);
+            _allowFlavorText = _cfgManager.GetCVar(CCVars.FlavorText);
+
             ImportButton.OnPressed += args =>
             {
                 ImportProfile();
@@ -173,6 +183,7 @@ namespace Content.Client.Lobby.UI
             #region Name
 
             NameEdit.OnTextChanged += args => { SetName(args.Text); };
+            NameEdit.IsValid = args => args.Length <= _maxNameLength;
             NameRandomize.OnPressed += args => RandomizeName();
             RandomizeEverythingButton.OnPressed += args => { RandomizeEverything(); };
             WarningLabel.SetMarkup($"[color=red]{Loc.GetString("humanoid-profile-editor-naming-rules-warning")}[/color]");
@@ -192,6 +203,18 @@ namespace Content.Client.Lobby.UI
             };
 
             #endregion Sex
+
+#if LOP
+            #region ERP-MODULE
+
+            ErpStatusButton.OnItemSelected += args =>
+            {
+                ErpStatusButton.SelectId(args.Id);
+                SetErpStatus((ErpStatus) args.Id);
+            };
+
+            #endregion
+#endif
 
             #region Age
 
@@ -464,14 +487,32 @@ namespace Content.Client.Lobby.UI
 
             UpdateSpeciesGuidebookIcon();
             IsDirty = false;
+
+
+#if LOP
+            _cfgManager.OnValueChanged(ErpCVars.EroticPanelEnabled,
+                UpdateErpControlsVisibility,
+                true);
+#endif
         }
+
+#if LOP
+        #region ERP-MODULE
+
+        private void UpdateErpControlsVisibility(bool obj)
+        {
+            ERPStatusContainer.Visible = obj;
+        }
+
+        #endregion
+#endif
 
         /// <summary>
         /// Refreshes the flavor text editor status.
         /// </summary>
         public void RefreshFlavorText()
         {
-            if (_cfgManager.GetCVar(CCVars.FlavorText))
+            if (_allowFlavorText)
             {
                 if (_flavorText != null)
                     return;
@@ -626,7 +667,7 @@ namespace Content.Client.Lobby.UI
 #endif
             // LOP edit end
 
-            _species.AddRange(_prototypeManager.EnumeratePrototypes<SpeciesPrototype>().Where(o => o.RoundStart && o.SponsorTier <= sponsorTier));  //LOP edit
+            _species.AddRange(_prototypeManager.EnumeratePrototypes<SpeciesPrototype>().Where(o => o.RoundStart && o.SponsorTier <= sponsorTier));  // LOP edit
             var speciesIds = _species.Select(o => o.ID).ToList();
 
             for (var i = 0; i < _species.Count; i++)
@@ -790,6 +831,10 @@ namespace Content.Client.Lobby.UI
             UpdateCMarkingsHair();
             UpdateCMarkingsFacialHair();
 
+#if LOP
+            UpdateErpStatusControls();
+#endif
+
             RefreshAntags();
             RefreshJobs();
             RefreshLoadouts();
@@ -803,6 +848,18 @@ namespace Content.Client.Lobby.UI
                 PreferenceUnavailableButton.SelectId((int)Profile.PreferenceUnavailable);
             }
         }
+
+#if LOP
+        #region ERP-MODULE
+
+        private void SetErpStatus(ErpStatus newErp)
+        {
+            Profile = Profile?.WithErpStatus(newErp);
+            SetDirty();
+        }
+
+        #endregion
+#endif
 
 
         /// <summary>
@@ -1254,6 +1311,11 @@ namespace Content.Client.Lobby.UI
             RefreshJobs();
             // In case there's species restrictions for loadouts
             RefreshLoadouts();
+
+#if LOP
+            UpdateErpStatusControls();
+#endif
+
             UpdateSexControls(); // update sex for new species
             UpdateSpeciesGuidebookIcon();
             ReloadPreview();
@@ -1275,6 +1337,46 @@ namespace Content.Client.Lobby.UI
             Profile = Profile?.WithSpawnPriorityPreference(newSpawnPriority);
             SetDirty();
         }
+
+#if LOP
+        #region ERP-MODULE
+
+        private void UpdateErpStatusControls()
+        {
+            if (Profile == null)
+                return;
+
+            const ErpStatus defaultStatus = ErpStatus.Ask;
+
+            ErpStatusButton.Clear();
+
+            var statusLabels = new Dictionary<ErpStatus, string>
+            {
+                { ErpStatus.Yes, Loc.GetString("humanoid-profile-editor-erp-yes-text") },
+                { ErpStatus.Ask, Loc.GetString("humanoid-profile-editor-erp-ask-text") },
+                { ErpStatus.No, Loc.GetString("humanoid-profile-editor-erp-no-text") }
+            };
+
+            foreach (var status in Enum.GetValues<ErpStatus>())
+            {
+                if (statusLabels.TryGetValue(status, out var label))
+                {
+                    ErpStatusButton.AddItem(label, (int)status);
+                }
+            }
+
+            if (Enum.IsDefined(Profile.ErpStatus))
+            {
+                ErpStatusButton.SelectId((int)Profile.ErpStatus);
+            }
+            else
+            {
+                ErpStatusButton.SelectId((int)defaultStatus);
+            }
+        }
+
+        #endregion
+#endif
 
         public bool IsDirty
         {
@@ -1650,7 +1752,7 @@ namespace Content.Client.Lobby.UI
 
             try
             {
-                //LOP edit start
+                // LOP edit start
                 List<string> marks = new();
 #if LOP
                 int sponsorTier = 0;
@@ -1670,7 +1772,7 @@ namespace Content.Client.Lobby.UI
                 , sponsorTier
 #endif
                 );
-                //LOP edit end
+                // LOP edit end
 
                 var oldProfile = Profile;
                 SetProfile(profile, CharacterSlot);

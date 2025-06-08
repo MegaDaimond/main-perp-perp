@@ -1,9 +1,11 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using Content.Shared.CCVar;
 using Content.Shared.Humanoid.Prototypes;
 using Content.Shared.Random;
 using Robust.Shared.Collections;
 using Robust.Shared.Network;
+using Robust.Shared.Configuration;
 using Robust.Shared.Player;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Serialization;
@@ -64,6 +66,7 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
     {
         var groupRemove = new ValueList<string>();
         var protoManager = collection.Resolve<IPrototypeManager>();
+        var configManager = collection.Resolve<IConfigurationManager>();
 
         if (!protoManager.TryIndex(Role, out var roleProto))
         {
@@ -83,10 +86,11 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
         if (EntityName != null)
         {
             var name = EntityName.Trim();
+            var maxNameLength = configManager.GetCVar(CCVars.MaxNameLength);
 
-            if (name.Length > HumanoidCharacterProfile.MaxNameLength)
+            if (name.Length > maxNameLength)
             {
-                EntityName = name[..HumanoidCharacterProfile.MaxNameLength];
+                EntityName = name[..maxNameLength];
             }
 
             if (name.Length == 0)
@@ -124,7 +128,7 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
                 continue;
             }
 
-            //LOP edit start
+            // LOP edit start
             if (groupProto.ID.ToString().Contains("Sponsor")
 #if LOP
                 && sponsorTier < 3
@@ -134,7 +138,7 @@ public sealed partial class RoleLoadout : IEquatable<RoleLoadout>
                 groupRemove.Add(group);
                 continue;
             }
-            //LOP edit end
+            // LOP edit end
 
             var loadouts = groupLoadouts[..Math.Min(groupLoadouts.Count, groupProto.MaxLimit)];
 

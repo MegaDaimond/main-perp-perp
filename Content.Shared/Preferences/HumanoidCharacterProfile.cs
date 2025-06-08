@@ -16,6 +16,9 @@ using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Serialization;
 using Robust.Shared.Utility;
+#if LOP
+using Content.Shared._ERPModule.Data; // LOP edit
+#endif
 
 namespace Content.Shared.Preferences
 {
@@ -28,20 +31,6 @@ namespace Content.Shared.Preferences
     {
         private static readonly Regex RestrictedNameRegex = new("[^А-Яа-яёЁ0-9' -]"); // Corvax-Localization
         private static readonly Regex ICNameCaseRegex = new(@"^(?<word>\w)|\b(?<word>\w)(?=\w*$)");
-
-        public const int MaxNameLength = 32;
-        public const int MaxLoadoutNameLength = 32;
-        //public const int MaxDescLength = 512; //LOP edit
-
-        //LOP edit start
-        public static int DescriptionLength(int tier)
-        {
-            if (tier >= 4)
-                return 2048;
-
-            return 1024;
-        }
-        //LOP edit end
 
         /// <summary>
         /// Job preferences for initial spawn.
@@ -95,6 +84,18 @@ namespace Content.Shared.Preferences
         [DataField]
         public int Age { get; set; } = 18;
 
+#if LOP
+
+        [DataField]
+        public ErpStatus ErpStatus { get; set; } = ErpStatus.Ask;
+
+        public HumanoidCharacterProfile WithErpStatus(ErpStatus erpStatus)
+        {
+            return new(this) { ErpStatus = erpStatus };
+        }
+
+#endif
+
         [DataField]
         public Sex Sex { get; private set; } = Sex.Male;
 
@@ -147,6 +148,11 @@ namespace Content.Shared.Preferences
             int age,
             Sex sex,
             Gender gender,
+
+#if LOP
+            ErpStatus erpStatus,
+#endif
+
             HumanoidCharacterAppearance appearance,
             SpawnPriorityPreference spawnPriority,
             Dictionary<ProtoId<JobPrototype>, JobPriority> jobPriorities,
@@ -162,6 +168,11 @@ namespace Content.Shared.Preferences
             Age = age;
             Sex = sex;
             Gender = gender;
+
+#if LOP
+            ErpStatus = erpStatus;
+#endif
+
             Appearance = appearance;
             SpawnPriority = spawnPriority;
             _jobPriorities = jobPriorities;
@@ -194,6 +205,10 @@ namespace Content.Shared.Preferences
                 other.Age,
                 other.Sex,
                 other.Gender,
+
+#if LOP
+                other.ErpStatus,
+#endif
                 other.Appearance.Clone(),
                 other.SpawnPriority,
                 new Dictionary<ProtoId<JobPrototype>, JobPriority>(other.JobPriorities),
@@ -228,14 +243,14 @@ namespace Content.Shared.Preferences
         }
 
         // TODO: This should eventually not be a visual change only.
-        public static HumanoidCharacterProfile Random(HashSet<string>? ignoredSpecies = null, int sponsorTier = 0)  //LOP edit
+        public static HumanoidCharacterProfile Random(HashSet<string>? ignoredSpecies = null, int sponsorTier = 0)  // LOP edit
         {
             var prototypeManager = IoCManager.Resolve<IPrototypeManager>();
             var random = IoCManager.Resolve<IRobustRandom>();
 
             var species = random.Pick(prototypeManager
                 .EnumeratePrototypes<SpeciesPrototype>()
-                .Where(a => a.SponsorTier <= sponsorTier)   //LOP edit
+                .Where(a => a.SponsorTier <= sponsorTier)   // LOP edit
                 .Where(x => ignoredSpecies == null ? x.RoundStart : x.RoundStart && !ignoredSpecies.Contains(x.ID))
                 .ToArray()
             ).ID;
@@ -504,6 +519,11 @@ namespace Content.Shared.Preferences
             if (Sex != other.Sex) return false;
             if (Gender != other.Gender) return false;
             if (Species != other.Species) return false;
+
+#if LOP
+            if (ErpStatus != other.ErpStatus) return false;
+#endif
+
             if (PreferenceUnavailable != other.PreferenceUnavailable) return false;
             if (SpawnPriority != other.SpawnPriority) return false;
             if (!_jobPriorities.SequenceEqual(other._jobPriorities)) return false;
@@ -519,7 +539,7 @@ namespace Content.Shared.Preferences
 #if LOP
         , int sponsorTier
 #endif
-        //LOP edit end
+        // LOP edit end
         )
         {
             var configManager = collection.Resolve<IConfigurationManager>();
@@ -539,6 +559,18 @@ namespace Content.Shared.Preferences
                 _ => Sex.Male // Invalid enum values.
             };
 
+#if LOP
+
+            var erpStatus = ErpStatus switch
+            {
+                ErpStatus.Yes => ErpStatus.Yes,
+                ErpStatus.Ask => ErpStatus.Ask,
+                ErpStatus.No => ErpStatus.No,
+                _ => ErpStatus.Ask
+            };
+
+#endif
+
             // ensure the species can be that sex and their age fits the founds
             if (!speciesPrototype.Sexes.Contains(sex))
                 sex = speciesPrototype.Sexes[0];
@@ -555,13 +587,14 @@ namespace Content.Shared.Preferences
             };
 
             string name;
+            var maxNameLength = configManager.GetCVar(CCVars.MaxNameLength);
             if (string.IsNullOrEmpty(Name))
             {
                 name = GetName(Species, gender);
             }
-            else if (Name.Length > MaxNameLength)
+            else if (Name.Length > maxNameLength)
             {
-                name = Name[..MaxNameLength];
+                name = Name[..maxNameLength];
             }
             else
             {
@@ -586,17 +619,11 @@ namespace Content.Shared.Preferences
                 name = GetName(Species, gender);
             }
 
-            //LOP edit start
-            var descLength = DescriptionLength(0);
-#if LOP
-            descLength = DescriptionLength(sponsorTier);
-#endif
-            //LOP edit end
-
             string flavortext;
-            if (FlavorText.Length > descLength) //LOP edit
+            var maxFlavorTextLength = configManager.GetCVar(CCVars.MaxFlavorTextLength);
+            if (FlavorText.Length > maxFlavorTextLength)
             {
-                flavortext = FormattedMessage.RemoveMarkupOrThrow(FlavorText)[..descLength];    //LOP edit
+                flavortext = FormattedMessage.RemoveMarkupOrThrow(FlavorText)[..maxFlavorTextLength];
             }
             else
             {
@@ -654,6 +681,11 @@ namespace Content.Shared.Preferences
             Age = age;
             Sex = sex;
             Gender = gender;
+
+#if LOP
+            ErpStatus = erpStatus;
+#endif
+
             Appearance = appearance;
             SpawnPriority = spawnPriority;
 
@@ -742,7 +774,7 @@ namespace Content.Shared.Preferences
         )
         {
             var profile = new HumanoidCharacterProfile(this);
-            profile.EnsureValid(session, collection, sponsorPrototypes  //LOP edit
+            profile.EnsureValid(session, collection, sponsorPrototypes  // LOP edit
 #if LOP
             , sponsorTier
 #endif
@@ -776,6 +808,11 @@ namespace Content.Shared.Preferences
             hashCode.Add(Age);
             hashCode.Add((int)Sex);
             hashCode.Add((int)Gender);
+
+#if LOP
+            hashCode.Add((int)ErpStatus);
+#endif
+
             hashCode.Add(Appearance);
             hashCode.Add((int)SpawnPriority);
             hashCode.Add((int)PreferenceUnavailable);

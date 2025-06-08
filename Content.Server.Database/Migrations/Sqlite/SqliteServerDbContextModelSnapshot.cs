@@ -749,6 +749,11 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .HasColumnType("TEXT")
                         .HasColumnName("admin_ooc_color");
 
+                    b.PrimitiveCollection<string>("ConstructionFavorites")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("construction_favorites");
+
                     b.Property<int>("SelectedCharacterSlot")
                         .HasColumnType("INTEGER")
                         .HasColumnName("selected_character_slot");
@@ -781,6 +786,13 @@ namespace Content.Server.Database.Migrations.Sqlite
                         .IsRequired()
                         .HasColumnType("TEXT")
                         .HasColumnName("char_name");
+
+#if LOP
+                    b.Property<string>("ErpStatus")
+                        .IsRequired()
+                        .HasColumnType("TEXT")
+                        .HasColumnName("erp_status");
+#endif
 
                     b.Property<string>("EyeColor")
                         .IsRequired()

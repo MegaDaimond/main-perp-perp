@@ -1,10 +1,12 @@
 using System.Linq;
+using Content.Shared.Construction.Prototypes;
 using Content.Shared.Preferences;
 using Robust.Client;
 using Robust.Client.Player;
 using Robust.Shared.Network;
+using Robust.Shared.Prototypes;
 using Robust.Shared.Utility;
-using Content.Shared.Humanoid.Markings; //LOP edit
+using Content.Shared.Humanoid.Markings; // LOP edit
 using YamlDotNet.Core.Tokens;
 #if LOP
 using Content.Client._NewParadise.Sponsors;
@@ -22,7 +24,7 @@ namespace Content.Client.Lobby
         [Dependency] private readonly IClientNetManager _netManager = default!;
         [Dependency] private readonly IBaseClient _baseClient = default!;
         [Dependency] private readonly IPlayerManager _playerManager = default!;
-        [Dependency] private readonly MarkingManager _markingManager = default!;    //LOP edit
+        [Dependency] private readonly MarkingManager _markingManager = default!;    // LOP edit
 
 #if LOP
         [Dependency] private readonly SponsorsManager _sponsorsManager = default!;
@@ -59,7 +61,7 @@ namespace Content.Client.Lobby
 
         public void SelectCharacter(int slot)
         {
-            Preferences = new PlayerPreferences(Preferences.Characters, slot, Preferences.AdminOOCColor);
+            Preferences = new PlayerPreferences(Preferences.Characters, slot, Preferences.AdminOOCColor, Preferences.ConstructionFavorites);
             var msg = new MsgSelectCharacter
             {
                 SelectedCharacterIndex = slot
@@ -71,7 +73,7 @@ namespace Content.Client.Lobby
         {
             var collection = IoCManager.Instance!;
 
-            //LOP edit start
+            // LOP edit start
             var sponsorPrototypes  = new List<string>();
 #if LOP
             int sponsorTier = 0;
@@ -91,10 +93,10 @@ namespace Content.Client.Lobby
             , sponsorTier
 #endif
             );
-            //LOP edit end
+            // LOP edit end
 
             var characters = new Dictionary<int, ICharacterProfile>(Preferences.Characters) { [slot] = profile };
-            Preferences = new PlayerPreferences(characters, Preferences.SelectedCharacterIndex, Preferences.AdminOOCColor);
+            Preferences = new PlayerPreferences(characters, Preferences.SelectedCharacterIndex, Preferences.AdminOOCColor, Preferences.ConstructionFavorites);
             var msg = new MsgUpdateCharacter
             {
                 Profile = profile,
@@ -117,7 +119,7 @@ namespace Content.Client.Lobby
 
             var l = lowest.Value;
             characters.Add(l, profile);
-            Preferences = new PlayerPreferences(characters, Preferences.SelectedCharacterIndex, Preferences.AdminOOCColor);
+            Preferences = new PlayerPreferences(characters, Preferences.SelectedCharacterIndex, Preferences.AdminOOCColor, Preferences.ConstructionFavorites);
 
             UpdateCharacter(profile, l);
         }
@@ -130,10 +132,20 @@ namespace Content.Client.Lobby
         public void DeleteCharacter(int slot)
         {
             var characters = Preferences.Characters.Where(p => p.Key != slot);
-            Preferences = new PlayerPreferences(characters, Preferences.SelectedCharacterIndex, Preferences.AdminOOCColor);
+            Preferences = new PlayerPreferences(characters, Preferences.SelectedCharacterIndex, Preferences.AdminOOCColor, Preferences.ConstructionFavorites);
             var msg = new MsgDeleteCharacter
             {
                 Slot = slot
+            };
+            _netManager.ClientSendMessage(msg);
+        }
+
+        public void UpdateConstructionFavorites(List<ProtoId<ConstructionPrototype>> favorites)
+        {
+            Preferences = new PlayerPreferences(Preferences.Characters, Preferences.SelectedCharacterIndex, Preferences.AdminOOCColor, favorites);
+            var msg = new MsgUpdateConstructionFavorites
+            {
+                Favorites = favorites
             };
             _netManager.ClientSendMessage(msg);
         }

@@ -31,6 +31,10 @@ using Content.Client._NC.DiscordAuth;
 using Content.Client._PrivateClient._NC.JoinQueue;
 #endif
 
+#if LOP
+using Content.Client._ERPModule.Services;
+#endif
+
 namespace Content.Client.IoC
 {
     internal static class ClientContentIoC
@@ -40,6 +44,7 @@ namespace Content.Client.IoC
             var collection = IoCManager.Instance!;
 
             collection.Register<IParallaxManager, ParallaxManager>();
+            collection.Register<GeneratedParallaxCache>();
             collection.Register<IChatManager, ChatManager>();
             collection.Register<ISharedChatManager, ChatManager>();
             collection.Register<IClientPreferencesManager, ClientPreferencesManager>();
@@ -72,6 +77,11 @@ namespace Content.Client.IoC
             collection.Register<DiscordAuthManager>();
             collection.Register<JoinQueueManager>();
 #endif
+
+#if LOP
+            collection.Register<CustomInteractionService, CustomInteractionService>(true);
+#endif
+
             // LOP edit end
         }
     }
