@@ -9,9 +9,6 @@
       collection: Parp
       params:
         variation: 0.125
-  - type: Construction
-    graph: GraphClothingShoesClownModWhoopie
-    node: whoopiemod
 
 - type: entity
   parent: ClothingShoesClown
@@ -37,9 +34,6 @@
       collection: FootstepClownSqueezeBottle
       params:
         variation: 0.125
-  - type: Construction
-    graph: GraphClothingShoesClownModKetchup
-    node: ketchupmod
 
 - type: entity
   parent: ClothingShoesClown
@@ -67,9 +61,6 @@
       collection: squeezeBottleUseSounds
       params:
         variation: 0.125
-  - type: Construction
-    graph: GraphClothingShoesClownModMustarchup
-    node: mustarchupmod
 
 - type: entity
   parent: ClothingShoesClown
@@ -95,6 +86,3 @@
       collection: FootstepClownSqueezeBottleWhoopie
       params:
         variation: 0.125
-  - type: Construction
-    graph: GraphClothingShoesClownModUltimate
-    node: ultimatemod

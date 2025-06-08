@@ -110,6 +110,3 @@
   - type: Tag
     tags:
       - Medal
-  - type: Construction
-    graph: ClothingNeckMedalGloriousOrder
-    node: GloriousOrder
