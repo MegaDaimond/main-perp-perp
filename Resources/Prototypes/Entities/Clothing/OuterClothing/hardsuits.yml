@@ -534,7 +534,6 @@
     clothingPrototype: ClothingHeadHelmetHardsuitSyndie
   - type: Tag
     tags:
-    - MonkeyWearable
     - Hardsuit
     - WhitelistChameleon
     - HidesTail # LOP edit
@@ -666,9 +665,6 @@
   - type: HeldSpeedModifier
   - type: ToggleableClothing
     clothingPrototype: ClothingHeadHelmetHardsuitCybersun
-  - type: Tag
-    tags:
-    - MonkeyWearable
 
 #Wizard Hardsuit
 - type: entity
