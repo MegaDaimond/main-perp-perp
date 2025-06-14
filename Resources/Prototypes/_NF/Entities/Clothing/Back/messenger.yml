@@ -1326,7 +1326,3 @@
         base-inhand-right: Base
       rightgMessengerBase:
         clasp-inhand-right: Clasp
-    mappedColors:
-      Base: Cyberpunk
-      Sling: Cyberpunk
-      Clasp: CyberpunkNeon

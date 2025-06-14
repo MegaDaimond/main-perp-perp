@@ -39,6 +39,3 @@
           decor_base_belt_04: CyberpunkDark
           decor_base_belt_05: CyberpunkDark
           mask_null: ""
-    mappedColors:
-      Base: CyberpunkDark
-      Decor: CyberpunkDark

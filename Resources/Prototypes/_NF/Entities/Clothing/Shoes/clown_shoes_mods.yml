@@ -29,11 +29,6 @@
     solution: food
   - type: Spillable
     solution: food
-  - type: FootstepModifier
-    footstepSoundCollection:
-      collection: FootstepClownSqueezeBottle
-      params:
-        variation: 0.125
 
 - type: entity
   parent: ClothingShoesClown
@@ -56,11 +51,6 @@
     solution: food
   - type: Spillable
     solution: food
-  - type: FootstepModifier
-    footstepSoundCollection:
-      collection: squeezeBottleUseSounds
-      params:
-        variation: 0.125
 
 - type: entity
   parent: ClothingShoesClown
@@ -81,8 +71,3 @@
     solution: food
   - type: Spillable
     solution: food
-  - type: FootstepModifier
-    footstepSoundCollection:
-      collection: FootstepClownSqueezeBottleWhoopie
-      params:
-        variation: 0.125

@@ -33,9 +33,6 @@
           icon_decor_base_glasses_01: Decor
         clothing_glasses_decor:
           decor_base_glasses_01: Decor
-    mappedColors:
-      Base: CyberpunkDark
-      Decor: CyberpunkDark
 
 # HUDs
 - type: entity
@@ -76,9 +73,6 @@
           icon_decor_base_glasses_02: Decor
         clothing_infoshades_decor:
           decor_base_glasses_02: Decor
-    mappedColors:
-      Base: CyberpunkNeon
-      Decor: CyberpunkNeon
   - type: ShowHealthBars
     damageContainers:
     - Inorganic

@@ -112,9 +112,6 @@
         icon-decor-mask: Decor
       clothing_mask_decor:
         decor-equipped-MASK: Decor
-    mappedColors:
-      Base: CyberpunkDark
-      Decor: CyberpunkNeon
   - type: IdentityBlocker
     coverage: MOUTH
 

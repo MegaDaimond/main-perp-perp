@@ -1023,9 +1023,3 @@
         inhand-right-handle: Handle
       rightDuffelZipper:
         inhand-right-zipper: Zipper
-    mappedColors:
-      Base: Cyberpunk
-      Sling: Cyberpunk
-      Straps: Cyberpunk
-      Handle: Cyberpunk
-      Zipper: CyberpunkNeon

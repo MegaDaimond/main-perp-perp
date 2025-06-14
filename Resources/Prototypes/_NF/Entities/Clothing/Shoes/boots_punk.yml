@@ -45,6 +45,3 @@
       clothing_boots_decor:
         mask_null: ""
       clothing_boots_overlay: *bootsOverlay
-    mappedColors:
-      Base: Cyberpunk
-      Decor: Cyberpunk
