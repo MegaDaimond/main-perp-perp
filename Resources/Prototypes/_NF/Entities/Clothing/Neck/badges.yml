@@ -97,5 +97,3 @@
     scale: 0.5, 0.5
   - type: Clothing
     sprite: _NF/Clothing/Neck/Misc/palbadge.rsi
-  - type: TypingIndicatorClothing
-    proto: pal

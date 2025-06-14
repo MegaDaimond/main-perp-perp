@@ -17,7 +17,6 @@
   - type: Tag
     tags:
     - ObjectOfSpiritualSignificance
-    - Crucifix
 
 - type: entity
   parent: ClothingNeckBase
