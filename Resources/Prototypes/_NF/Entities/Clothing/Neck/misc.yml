@@ -14,9 +14,6 @@
     mixMessage: "bible-mixing-success"
     reactionTypes:
     - Holy
-  - type: Tag
-    tags:
-    - ObjectOfSpiritualSignificance
 
 - type: entity
   parent: ClothingNeckBase
