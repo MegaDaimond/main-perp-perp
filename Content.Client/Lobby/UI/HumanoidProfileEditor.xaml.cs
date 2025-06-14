@@ -1223,22 +1223,6 @@ namespace Content.Client.Lobby.UI
                         Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
                         break;
                     }
-                // LOP edit start
-                case HumanoidSkinColor.ShelegToned:
-                    {
-                        if (!Skin.Visible)
-                        {
-                            Skin.Visible = true;
-                            RgbSkinColorContainer.Visible = false;
-                        }
-
-                        var color = SkinColor.ShelegSkinTone((int)Skin.Value);
-
-                        Markings.CurrentSkinColor = color;
-                        Profile = Profile.WithCharacterAppearance(Profile.Appearance.WithSkinColor(color));
-                        break;
-                    }
-                    // LOP edit end
             }
 
             ReloadProfilePreview();
@@ -1512,20 +1496,6 @@ namespace Content.Client.Lobby.UI
 
                         break;
                     }
-                // LOP edit start
-                case HumanoidSkinColor.ShelegToned:
-                    {
-                        if (!Skin.Visible)
-                        {
-                            Skin.Visible = true;
-                            RgbSkinColorContainer.Visible = false;
-                        }
-
-                        Skin.Value = SkinColor.ShelegSkinToneFromColor(Profile.Appearance.SkinColor);
-
-                        break;
-                    }
-                    // LOP edit end
             }
 
         }
