@@ -947,6 +947,9 @@
   id: MonkeyCube
 
 - type: Tag
+  id: MonkeyWearable
+
+- type: Tag
   id: Mop
 
 - type: Tag
