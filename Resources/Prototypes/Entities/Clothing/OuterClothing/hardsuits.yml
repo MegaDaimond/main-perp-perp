@@ -596,6 +596,7 @@
     - WhitelistChameleon
     - HidesTail # LOP edit
     - CorgiWearable
+    - ScurretWearable
   - type: StaticPrice
     price: 5000
   - type: DNALocker # ADT edit
