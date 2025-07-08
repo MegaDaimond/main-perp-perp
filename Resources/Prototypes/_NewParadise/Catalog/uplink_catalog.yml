@@ -137,7 +137,7 @@
       - NukeOpsUplink
 
 - type: listing
-  id: LPPUplinkCubersunBundle
+  id: LPPUplinkModsuitBackSyndicate
   name: uplink-catalog-modsuitsyndicate-name
   description: uplink-catalog-modsuitsyndicate-desc
   productEntity: ADTClothingModsuitBackSyndicate
@@ -147,7 +147,7 @@
   - UplinkWearables
 
 - type: listing
-  id: LPPUplinkCubersunBundle
+  id: LPPUplinkModsuitBackSyndicateCommander
   name: uplink-catalog-modsuitsyndicatecommander-name
   description: uplink-catalog-modsuitsyndicatecommander-desc
   productEntity: ADTClothingModsuitBackSyndicateCommander
@@ -162,7 +162,7 @@
       - NukeOpsUplink
 
 - type: listing
-  id: LPPUplinkCubersunBundle
+  id: LPPUplinkModsuitBackSyndicateElite
   name: uplink-catalog-modsuitsyndicateelite-name
   description: uplink-catalog-modsuitsyndicateelite-desc
   productEntity: ADTClothingModsuitBackSyndicateElite
@@ -177,7 +177,7 @@
       - NukeOpsUplink
 
 - type: listing
-  id: LPPUplinkCubersunBundle
+  id: LPPUplinkModsuitModEmpProtection
   name: uplink-catalog-modempprotection-name
   description: uplink-catalog-modempprotection-desc
   productEntity: ADTModsuitModEmpProtection
@@ -187,7 +187,7 @@
   - UplinkDisruption
 
 - type: listing
-  id: LPPUplinkCubersunBundle
+  id: LPPUplinkModsuitModStun
   name: uplink-catalog-modstun-name
   description: uplink-catalog-modstun-desc
   productEntity: ADTModsuitModStun
@@ -197,7 +197,7 @@
   - UplinkDisruption
 
 - type: listing
-  id: LPPUplinkCubersunBundle
+  id: LPPUplinkModsuitModPowerKick
   name: uplink-catalog-modpowerkick-name
   description: uplink-catalog-modpowerkick-desc
   productEntity: ADTModsuitModPowerKick
