@@ -28,7 +28,7 @@
       Unsexed: FemaleHuman
   - type: Damageable
     damageContainer: Biological
-    damageModifierSet: Demon
+    damageModifierSet: Vulpkanin
   - type: MeleeWeapon
     # hidden: true
     soundHit:
