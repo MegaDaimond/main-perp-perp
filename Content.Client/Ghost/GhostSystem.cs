@@ -197,9 +197,24 @@ namespace Content.Client.Ghost
             _console.RemoteExecuteCommand(null, "ghostroles");
         }
 
+        // Goob edit start - ghost bar
+        public void GhostBarSpawn()
+        {
+            RaiseNetworkEvent(new GhostBarSpawnEvent());
+        }
+        // Goob edit end - ghost bar
+
         public void ToggleGhostVisibility(bool? visibility = null)
         {
             GhostVisibility = visibility ?? !GhostVisibility;
         }
+
+        // WD EDIT start
+        public void ReturnToRound()
+        {
+            var msg = new GhostReturnToRoundRequest();
+            RaiseNetworkEvent(msg);
+        }
+        // WD EDIT end
     }
 }
