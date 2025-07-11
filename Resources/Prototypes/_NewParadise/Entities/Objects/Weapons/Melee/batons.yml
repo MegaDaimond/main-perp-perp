@@ -6,6 +6,7 @@
   components:
   - type: Sprite
     sprite: _NewParadise/Objects/Weapons/Melee/rubber_buton.rsi
+    state: icon
   - type: Item
     size: Normal
     sprite: _NewParadise/Objects/Weapons/Melee/rubber_buton.rsi
